@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+
+    <title>Exercice</title>
+  </head>
+  <body>
+    <!--
+    <nav>
+      <a class="mainTitle" href="index.html">Calculatrice</a><br>
+      <a class="mainTitle" href="graph.html">Graphique</a>
+    </nav>
+    -->
+    
+    <div class="calc">
+      <h1>Tom's Calculator</h1>
+      <div class="resBar">
+        <canvas class="graphDis hidden" id="functionGraph"></canvas>
+
+
+        <div class="calcDis">
+          <div class="top"></div>
+          <div class="bottom"></div>
+        </div>
+      </div>
+      
+      <div class="buttonContainer">
+        <div class="calcBtn rest">(</div>
+        <div class="calcBtn rest">)</div>
+        <div class="calcBtn rest">x</div>
+        <div class="calcBtn special">Calc</div>
+        <div class="calcBtn special">Draw</div>
+
+
+        <div class="calcBtn fct">sin</div>
+        <div class="calcBtn fct">cos</div>
+        <div class="calcBtn fct">tan</div>
+        <div class="calcBtn fct">ln</div>
+        <div class="calcBtn fct">log10</div>
+
+        <div class="calcBtn fct">arcsin</div>
+        <div class="calcBtn fct">arccos</div>
+        <div class="calcBtn fct">arctan</div>
+        <div class="calcBtn fct">exp</div>
+        <div class="calcBtn fct">^</div>
+
+        <div class="calcBtn">7</div>
+        <div class="calcBtn">8</div>
+        <div class="calcBtn">9</div>
+        <div class="calcBtn rest">DEL</div>
+        <div class="calcBtn rest">AC</div>
+
+        <div class="calcBtn">4</div>
+        <div class="calcBtn">5</div>
+        <div class="calcBtn">6</div>
+        <div class="calcBtn oper">*</div>
+        <div class="calcBtn oper">/</div>
+
+        <div class="calcBtn">1</div>
+        <div class="calcBtn">2</div>
+        <div class="calcBtn">3</div>
+        <div class="calcBtn oper">+</div>
+        <div class="calcBtn oper">-</div>
+
+        <div class="calcBtn">0</div>
+        <div class="calcBtn">.</div>
+        <div class="calcBtn darkBtn darkk"><img class="darkk" src="./day-and-night-icon.png"></div>
+        <div class="calcBtn rest"></div> <!-- REP -->
+        <div class="calcBtn oper">=</div>
+      </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
+  </body>
+</html>
