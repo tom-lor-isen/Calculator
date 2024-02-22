@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Kode+Mono:wght@400..700&display=swap');
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+
+  height: 100vh;
+
+  margin: 0;
+
+  transition: all .5s;
+
+  font-family: "Kode Mono";
+}
+
+body.darkMode {
+  background-color: #2E2E2E;
+}
+
+
+.calc {
+  box-sizing: border-box;
+  font-size: 25px;
+  padding: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #9f9f9f;
+  box-shadow: 5px 5px 0px 0px #00335d, 5px 5px 10px 0px #000000;
+}
+
+.calc h1 {
+  font-size: 30px;
+  margin: 0px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  font-style: italic;
+  color: white;
+}
+
+.resBar {
+
+  width: 100%;
+  height: 237px;
+
+  border: 2px solid #00203b;
+
+  background-color: white;
+
+  margin-bottom: 10px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  padding: 10px;
+
+  box-shadow: inset 1px 1px 5px -1px #00203b;
+
+  transition: all .5s;
+}
+
+body.darkMode .resBar {
+  background-color: #2E2E2E;
+
+  color: white;
+}
+
+.top {
+  height: 20%;
+  width: 100%;
+
+  
+  box-sizing: border-box;
+
+}
+
+.bottom {
+
+  display: flex;
+  justify-content: right;
+  align-items: end;
+  height: 85%;
+  width: 100%;
+
+  
+  box-sizing: border-box;
+
+  text-align: right;
+
+}
+
+.buttonContainer {
+  height: auto;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+
+  box-sizing: inherit;
+}
+
+.calcBtn {
+
+  letter-spacing: -1px;
+
+  height: 35px;
+  border-radius: 10px 10px 15px 15px;
+  width: 80px;
+
+  color: white;
+
+  background-color: rgb(218, 142, 0);
+  border: 0px;
+
+  box-shadow: 3px 3px 0px 0px rgb(56, 36, 0);
+  font-size: 20px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+
+  margin: 5px;
+
+  transition: all .2s ease-in-out;
+}
+
+.calcBtn:hover {
+  background-color: #2095F3;
+}
+
+.calcBtn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px rgb(56, 36, 0);
+}
+
+
+.calcDis {
+  height: 100%;
+  width: 100%;
+}
+
+.graphDis {
+  width: 100%;
+  height: 100%!important;
+}
+
+.graphDis.hidden, .calcDis.hidden {
+  display: none!important;
+}
+
+.darkBtn {
+  background-color: #2e2e2e;
+}
+
+.darkBtn img {
+  display: flex;
+  align-items: center;
+  height: 90%;
+  filter: invert(1);
+  transition: all .5s;
+}
+
+body.darkMode .darkBtn {
+  background-color: white;
+  color: #2e2E2e;
+}
+
+body.darkMode .darkk {
+  filter: invert(0);
+}
+
+.oper {
+  background-color: rgb(190, 0, 0);
+}
+
+.fct {
+  background-color: #2095F3;
+}
+
+.special {
+  background-color: green;
+}
+
+.rest {
+  background-color: #5ac14c;
+}
