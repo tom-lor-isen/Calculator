@@ -1,45 +1,79 @@
 let btnContainer = document.querySelector(".buttonContainer");
 
-let topValue = [];
+let topValue = "";
 let bottomValue = "";
 
-let REP = "";
+let cursorIndex = 0;
+
+let Graph;
 
 
-// MATH FUNCTIONS
-let sin = Math.sin;
-let cos = Math.cos;
-let tan = Math.tan;
+// Delete one element
+findBtnByValue('DEL').onclick = () => {
+  bottomValue = '';
 
-let arccos = Math.acos;
-let arcsin = Math.asin;
-let arctan = Math.atan;
+  topValue = topValue.split('');
 
-let ln = Math.log;
-let exp = Math.exp;
+  topValue = topValue.slice(0, cursorIndex - 1).concat(topValue.slice(cursorIndex)).join("");
 
-let pow = Math.pow;
+  displayCalcTop();
+  displayCalcBottom();
 
-let log10 = Math.log10;
+  cursorIndex <= 0 ? cursorIndex = 0: cursorIndex--;
+  updateCursor();
+}
 
-let sqrt = Math.sqrt;
+// Reset entry
+findBtnByValue('AC').onclick = () => {
+  topValue = "";
+  bottomValue = '';
 
-let functionList = [sin, cos, tan, arccos, arcsin, arctan, ln, log10, sqrt, exp, pow];
+  displayCalcTop();
+  displayCalcBottom();
 
-let specialBtn = ["REP", "", "DEL", "AC", "="]
+  cursorIndex = 0;
+  updateCursor();
+}
 
-let pressKeys = ['*', '/', '+', '-', '=', '.', '(', ')', 'x', '0', '^']
+// execute operation
+findBtnByValue('=').onclick = () => {
 
+  try {
+    bottomValue = evalExp(topValue);
+  }
 
+  catch(e) {
+    bottomValue = e.message;
+  }
 
+  displayCalcBottom();
+}
 
+// Dark mode
+document.querySelector('.darkBtn').onclick = () => {
+  document.querySelector('body').classList.toggle("darkMode");
+}
+
+function updateCursor() {
+  document.querySelector('.topBar').style.left = (cursorIndex * 15 - 1) + 'px';
+}
 
 function displayCalcTop() {
-  document.querySelector(".top").textContent = topValue.join('');
+  document.querySelector(".top").textContent = topValue;
 }
 
 function displayCalcBottom(value) {
   document.querySelector(".bottom").textContent = value || bottomValue;
+}
+
+function insertValue(char) {
+  topValue = topValue.split("");
+  let t1 = topValue.slice(0, cursorIndex - 1);
+  t1.push(char)
+  let t2 = topValue.slice(cursorIndex - 1)
+  topValue = t1.concat(t2).join("");
+
+  displayCalcTop();
 }
 
 function findBtnByValue(content) {
@@ -59,13 +93,8 @@ function findBtnByValue(content) {
 
 
 document.addEventListener('keydown', (e) => {
-  //e.preventDefault();
 
-  if(Number(e.key) || pressKeys.includes(e.key)) {
-    findBtnByValue(e.key).click();
-  }
-
-  else if(e.key == 'Delete') {
+  if(e.key == 'Delete') {
     findBtnByValue("AC").click();
   }
 
@@ -73,103 +102,69 @@ document.addEventListener('keydown', (e) => {
     findBtnByValue("DEL").click();
   }
 
-  else if(e.key == 'Enter') {
+  else if(e.key == 'Enter' || e.key == '=') {
+    bottomValue = "";
+    displayCalcBottom();
+
     findBtnByValue("=").click();
   }
+
+  else if(e.key.length == 1 && e.key != " ") {
+    bottomValue = "";
+    displayCalcBottom();
+    cursorIndex++;
+
+    insertValue(e.key);
+    displayCalcTop()
+  }
+
+  else if(e.code == 'ArrowLeft' || e.code == 'ArrowRight') {
+    if(e.code == 'ArrowLeft') {
+      cursorIndex <= 0 ? cursorIndex = topValue.length : cursorIndex--;
+    }
+    else {
+      cursorIndex >= topValue.length ? cursorIndex = 0 : cursorIndex++;
+    }
+  }
+  
+  updateCursor();
   
 })
 
 
-function btnClick(event) {
+document.querySelectorAll('.calcBtn').forEach(elem => {
 
-  event.preventDefault();
-
-  let elem = event.target;
-
-  if(elem.classList.contains("darkk")) 
-    return document.querySelector('body').classList.toggle("darkMode");
-
+  if(elem.classList.contains('fct') || elem.classList.contains('num')) {
+    elem.onclick = () => {
+      insertValue(elem.textContent);
+      displayCalcTop();
+    }
+  }
   
-
-  displayCalcBottom(" ");
-
-  if(elem.textContent == "AC") {
-    topValue = [];
-    bottomValue = "";
-
-    displayCalcBottom();
-    displayCalcTop();
+  else if(elem.classList.contains('rest') && elem.textContent != 'DEL' && elem.textContent != 'AC') {
+    elem.onclick = () => {
+      insertValue(elem.textContent);
+      displayCalcTop();
+    }
   }
 
-  if(elem.textContent == "Draw") {
-    document.querySelector(".calcDis").classList.add("hidden");
-    document.querySelector(".graphDis").classList.remove("hidden");
+  else if(elem.textContent == "Draw") {
+    elem.onclick = () => {
+      document.querySelector(".calcDis").classList.add("hidden");
+      document.querySelector(".graphDis").classList.remove("hidden");
+
+      updateGraph()
+    }
   
-    updateGraph()
   }
 
   else if(elem.textContent == "Calc") {
-    document.querySelector(".calcDis").classList.remove("hidden");
-    document.querySelector(".graphDis").classList.add("hidden");
-  }
-
-  else if(!specialBtn.includes(elem.textContent)) {
-    if(REP !== "" && bottomValue !== "") {
-      bottomValue = "";
-      topValue = ["REP"];
-      displayCalcBottom();
-    }
-
-    topValue.push(elem.textContent);
-    displayCalcTop();
-
-  }
-
-  else {
-    if(elem.textContent == "=") {
-      try {
-
-        bottomValue = evalExp(topValue.join(""));
-
-        if(bottomValue == Infinity || isNaN(bottomValue)) {
-          bottomValue = "";
-          throw new TypeError("Error");
-        }
-
-        else {
-          REP = bottomValue;
-        }
-
-        displayCalcBottom();
-
-      } catch(e) {
-        displayCalcBottom(e.message);
-      }
-    }
-
-    else if(elem.textContent == "REP") {
-      topValue.push("REP")
-      displayCalcTop();
-
-      bottomValue = "";
-      displayCalcBottom();
-    }
-
-    else if(elem.textContent == "DEL") {
-      topValue.pop();
-      displayCalcTop();
-
-      bottomValue = "";
-      displayCalcBottom();
+    elem.onclick = () => {
+      document.querySelector(".calcDis").classList.remove("hidden");
+      document.querySelector(".graphDis").classList.add("hidden");
     }
   }
-}
-
-document.querySelectorAll('.calcBtn').forEach(elem => {
-  elem.addEventListener("click", btnClick);
 })
-
-
 
 
 
@@ -179,8 +174,6 @@ document.querySelectorAll('.calcBtn').forEach(elem => {
 
 // Graphing
 var ctx = document.getElementById("functionGraph");
-
-let Graph;
 
 function updateGraph() {
 
@@ -193,10 +186,21 @@ function updateGraph() {
 
     x = Math.round(x * 10) / 10;
 
-    let cur = evalExp(topValue.join(""), x);
+    let cur;
+    let next;
+
+    try {
+      cur = evalExp(topValue, x);
+    }
+    catch(e) {};
+    
     x = Math.round((x + interval) * 10) / 10;
 
-    let next = evalExp(topValue.join(""), x);
+    try {
+      next = evalExp(topValue, x);
+    }
+    catch(e) {};
+    
     x = Math.round((x - interval) * 10) / 10;
 
     if(Number(cur) == cur && !isNaN(cur) && Math.abs(cur - next) < 10000) {
@@ -212,10 +216,10 @@ function updateGraph() {
     }
   }
 
-  data = {
+  let data = {
     labels: labelss,
     datasets: [{
-      label: 'f(x) = ' + topValue.join(""),
+      label: 'f(x) = ' + topValue,
       data: datas,
       fill: false,
       borderColor: '#2095F3',
@@ -235,7 +239,7 @@ function updateGraph() {
     }
   }
 
-  if(!Graph) {
+  if(Graph == undefined) {
     Graph = new Chart(ctx, config);
   }
   else {
@@ -243,5 +247,3 @@ function updateGraph() {
     Graph.update()
   }
 }
-
-// Problem with x
