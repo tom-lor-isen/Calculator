@@ -20,6 +20,8 @@ It can pretty much **understand every kind of mathematical expression** included
 You can use calculator's buttons or use the keyboard to enter an expression.into the calculator.  
 
 - To get the result you can either press `=` (calculator or keyboard) or `Enter` (keyboard).
+- `Del` (keyboard) or `AC` (calculator) to erase expression.
+- `Backspace` (keyboard) or `DEL` (calculator) to delete element before cursor.
 - Type functions using buttons or keyboard to type.
 - Move the cursor to delete or insert element at a specific place using left and right arrow.
 

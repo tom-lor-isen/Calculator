@@ -48,7 +48,8 @@ body.darkMode {
 
 .resBar {
 
-  width: 100%;
+  width: 450px;
+  overflow: hidden;
   height: 237px;
 
   border: 2px solid #00203b;
@@ -80,6 +81,7 @@ body.darkMode .resBar {
   height: 20%;
   width: 100%;
 
+  overflow: hidden;
   
   box-sizing: border-box;
 
@@ -109,6 +111,12 @@ body.darkMode .resBar {
 
 }
 
+
+body.darkMode .topBar {
+  animation-name: tickingDark;
+}
+
+
 @keyframes ticking {
   from {
     background-color: #00000000;
@@ -120,6 +128,20 @@ body.darkMode .resBar {
 
   to {
     background-color: #000000FF;
+  }
+}
+
+@keyframes tickingDark {
+  from {
+    background-color: #ffffff00;
+  }
+
+  25% {
+    background-color: #ffffff00;
+  }
+
+  to {
+    background-color: rgb(255, 255, 255);
   }
 }
 
@@ -250,5 +272,5 @@ body.darkMode .darkk {
 }
 
 .rest {
-  background-color: #5ac14c;
+  background-color: #4fa743;
 }

@@ -49,17 +49,17 @@ function evalExp(expr, x) {
       number.push(char);
     }
 
-    if(char == 'x' && letter.length == 0) {
+    if((char == 'x' || char == 'π') && letter.length == 0) {
 
       if(number.length != 0) {
         queue.push(number.join(""));
         number = [];
       }
 
-      if(!RegExp(/[+-\/\*\^]$/).test(queue[queue.length - 1]) && queue.length != 0) {
+      if(!RegExp(/[+-\/\*\^\%]$/).test(queue[queue.length - 1]) && queue.length != 0) {
         queue.push('*');
       }
-      queue.push('x');
+      queue.push(char);
     }
 
     // Writing a function name
@@ -178,9 +178,9 @@ function transformExp(expr) {
       }
     }
 
-    if(char == ')' || char == '%') {
+    if(char == ')' || char == '%' || char == 'π') {
 
-      if(i != 0 && i != expr.length - 1 && expr[i + plus + 1] != undefined && (!RegExp(/[\+\-\/\*\^\)\%]/).test(expr[i + plus + 1]) || expr[i + plus + 1] == 'x')) {
+      if(i != 0 && i != expr.length - 1 && expr[i + plus + 1] != undefined && (!RegExp(/[\+\-\/\*\^\)\%\π]/).test(expr[i + plus + 1]) || expr[i + plus + 1] == 'x')) {
         let expr1 = expr.split('').slice(0, i + plus + 1);
         expr1.push('*')
         expr = expr1.concat(expr.slice(i + plus + 1)).join('')
@@ -195,9 +195,13 @@ function transformExp(expr) {
 
 function treatQueue(queue, x) {
 
-
   while(queue.find(ele => ele == 'x')) {
     queue[queue.indexOf(queue.find(ele => ele == 'x'))] = x;
+  }
+
+  
+  while(queue.find(ele => ele == 'π')) {
+    queue[queue.indexOf(queue.find(ele => ele == 'π'))] = Math.PI;
   }
 
   while(queue.find(ele => ele == '%')) {
@@ -272,6 +276,7 @@ function treatQueue(queue, x) {
 
     queue = leftQueue.concat(res).concat(rightQueue);
   }
+  
 
   if(queue.length == 0) return 0;
 

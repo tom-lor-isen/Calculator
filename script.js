@@ -55,7 +55,7 @@ document.querySelector('.darkBtn').onclick = () => {
 }
 
 function updateCursor() {
-  document.querySelector('.topBar').style.left = (cursorIndex * 15 - 1) + 'px';
+  document.querySelector('.topBar').style.left = (cursorIndex * 15 + 1) + 'px';
 }
 
 function displayCalcTop() {
@@ -68,10 +68,13 @@ function displayCalcBottom(value) {
 
 function insertValue(char) {
   topValue = topValue.split("");
-  let t1 = topValue.slice(0, cursorIndex - 1);
+  let t1 = topValue.slice(0, cursorIndex);
   t1.push(char)
-  let t2 = topValue.slice(cursorIndex - 1)
+  let t2 = topValue.slice(cursorIndex)
   topValue = t1.concat(t2).join("");
+
+  cursorIndex += char.length;
+  updateCursor();
 
   displayCalcTop();
 }
@@ -112,7 +115,6 @@ document.addEventListener('keydown', (e) => {
   else if(e.key.length == 1 && e.key != " ") {
     bottomValue = "";
     displayCalcBottom();
-    cursorIndex++;
 
     insertValue(e.key);
     displayCalcTop()
@@ -125,9 +127,10 @@ document.addEventListener('keydown', (e) => {
     else {
       cursorIndex >= topValue.length ? cursorIndex = 0 : cursorIndex++;
     }
+
+    updateCursor();
   }
   
-  updateCursor();
   
 })
 
