@@ -31,3 +31,6 @@ You can use calculator's buttons or use the keyboard to enter an expression.into
 - `style.css`: Style file
 - `calcInterpretation.js`: File containing all the code related to the mathematical expression interpretation, and outputs a result
 - `script.js`: File containing the code related to page animation and user interface/experience
+
+
+***Note: Some bugs might still occur due to a difficult interpretation***
